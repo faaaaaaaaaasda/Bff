@@ -1,0 +1,44 @@
+name: WincorsSMP
+version: 1.0.0
+main: com.wincors.smp.WincorsSMP
+api-version: '1.21.11'
+author: Wincors
+description: Origins, mana, combat system and restrictions for Wincors SMP
+commands:
+  wincors:
+    description: Admin command for Wincors SMP
+    aliases: [wsmp]
+    usage: /wincors help
+  vanish:
+    description: Toggle vanish (admins)
+    aliases: [v]
+    usage: /vanish [player|list]
+  calamity:
+    description: Open the Calamity (operator) power menu
+    usage: /calamity [1-30|undo|aura]
+  menu:
+    description: Open the Wincors menu
+    aliases: [wmenu]
+    usage: /menu
+  origin:
+    description: View origins and their powers
+    usage: /origin [list|info <origin>]
+  mana:
+    description: View your mana
+    usage: /mana
+  power:
+    description: View and use your powers
+    usage: /power [use|next|select <n>]
+permissions:
+  wincors.admin:
+    description: Use admin commands
+    default: op
+  wincors.alerts:
+    description: Receive anti-cheat and x-ray alerts
+    default: op
+  wincors.calamity:
+    description: Use the operator-only Calamity origin
+    default: op
+  wincors.bypass:
+    description: Bypass End closure and PvP/armor restrictions
+    default: op

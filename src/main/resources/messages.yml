@@ -1,0 +1,121 @@
+# =====================================================================
+#  Wincors SMP - MESSAGES  (edit, then /wincors reload)
+# =====================================================================
+#  Colors use & codes (&a, &c, &l ...). {placeholders} are filled in by
+#  the plugin - keep them in the text where you want the value to appear.
+#
+#  "replacements" at the bottom is a global find/replace applied to EVERY
+#  piece of plugin text (menus, admin command output, item names...), so you
+#  can reword anything that has no key here. Example:
+#    replacements:
+#      "Origin Core": "Power Orb"
+# =====================================================================
+
+prefix: "&8[&6Wincors&8] &r"
+no-permission: "&cYou don't have permission."
+
+# ---- origins & mana
+origin-set: "&aYour origin is now {origin}"
+origin-removed: "&cYour origin was removed by an admin."
+data-reset: "&eYour data was reset. New origin: {origin}"
+origin-awaken: "&aYou awaken a new origin: {origin}&a! &7({reason})"
+mana-max: "&cYou are already at max mana."
+mana-gain: "&b+{amount} mana &7({reason}) &8- &fMana: &b{mana}/{max} &8| &6Power {tier}"
+mana-lost: "&c-{loss} mana &7(you died) &8- &fMana: &b{mana}/{max}"
+power-lost: "&c&lYou lost your power! &7You had no mana left to lose. Gain mana (kill a player / Mana Crystal) to awaken a new origin."
+no-mana-recent-kill: "&7No mana: you recently killed {victim}."
+reason-kill: "killed {victim}"
+reason-crystal: "Mana Crystal"
+welcome: "&aWelcome to Wincors SMP! Your origin is {origin}&a: &7{description}"
+welcome-tip: "&7Use &e/origin&7, &e/mana&7 and &e/power&7. Press &eF&7 to use a power, &eSneak+F&7 to switch."
+
+# ---- choosing an origin
+choose-prompt: "&6Choose your origin! &7Pick one in the menu (reopen it with &e/origin choose&7)."
+choose-done: "&aYou chose {origin}&a!"
+choose-full: "&cThat origin is full ({limit} players max)."
+choose-locked: "&cYou can't choose an origin right now."
+choose-same: "&7You already have that origin."
+
+# ---- weapons
+weapon-earned-broadcast: "&6{player} &ehas reached &c&lMAX MANA &eas {origin}&e and earned a legendary weapon!"
+weapon-received: "&6You received &l{weapon}&6!"
+weapon-dormant: "&7Your weapon is dormant. &8(needs max mana + matching origin)"
+
+# ---- powers
+no-actives: "&cYou have no active powers yet (first one unlocks at power 3)."
+power-cooldown: "&c{power} on cooldown: {seconds}s"
+power-used: "&6Used &e{power}&6!"
+power-cycled: "&aSelected power: &e{power}"
+power-selected: "&aSelected: &e{power}"
+power-invalid-slot: "&cInvalid slot. You have {count} active power(s)."
+swap-no-actives: "&cNo active powers yet.{next}"
+swap-one-active: "&cYou only have 1 active power ({power}).{next}"
+next-unlock: " Next one unlocks at power {tier}."
+all-unlocked: " You have unlocked them all."
+dodged: "&bDodged!"
+no-target: "&cNo target in range."
+no-room: "&cNo room to teleport there."
+
+# ---- combat
+combat-start: "&cYou are now in combat! &7Don't log out. Ender pearls, crystals and anchors are disabled."
+combat-logout: "&c{player} logged out in combat and was slain!"
+combat-item-blocked: "&cYou can't use that while in combat!"
+ender-pearl-cooldown: "&cEnder pearl on cooldown: {time}"
+combat-pearl-blocked: "&cEnder pearls are disabled during PvP!"
+combat-command-blocked: "&cYou can't use that command while in combat ({seconds}s)."
+combat-crystal-blocked: "&cEnd crystals are disabled during PvP!"
+combat-anchor-blocked: "&cRespawn anchors are disabled during PvP!"
+
+# ---- restrictions
+armor-banned: "&cNetherite armor is banned on Wincors SMP. (Netherite tools are fine.)"
+mace-exists: "&cThe one and only Mace has already been crafted!"
+mace-no-shift: "&cCraft the Mace without shift-clicking."
+mace-forged: "&6&l{player} &ehas forged the one and only &6&lMACE&e!"
+mace-claimed: "&6{player} &eclaimed the one and only &6&lMACE&e!"
+mace-removed: "&cOnly one Mace may exist on this server - yours was removed."
+
+# ---- grace period / PvP switch
+grace-started: "&a&lPvP GRACE PERIOD! &7PvP is disabled for &f{time}&7."
+grace-extended: "&a&lGrace period extended! &7PvP stays disabled for &f{time}&7."
+grace-ended: "&c&lThe grace period is over! &7PvP is now enabled."
+grace-active: "&aA PvP grace period is active: &f{time} &aleft."
+grace-pvp-blocked: "&aPvP is disabled - grace period: {time} left"
+grace-personal-blocked: "&aYou or that player has PvP protection."
+pvp-disabled: "&cPvP is currently disabled by the admins."
+pvp-toggle-on: "&c&lPvP has been ENABLED!"
+pvp-toggle-off: "&a&lPvP has been DISABLED by the admins."
+
+# ---- chat lock / lockdown
+chat-locked: "&cChat is locked by the admins."
+lockdown-kick: "&c&lThe server is in maintenance mode.\n&7{reason}"
+
+# ---- the End / egg / admin tools
+end-opened: "&a&lThe End has been OPENED!"
+end-closed: "&c&lThe End has been CLOSED!"
+end-evacuated: "&cYou were removed from the End."
+end-blocked: "&cThe End is currently closed."
+egg-gain: "&5The Dragon Egg empowers you: &c{hearts} hearts &5and &bfaster cooldowns&5!"
+egg-lose: "&7The Dragon Egg's power fades from you."
+muted: "&cYou are muted."
+
+# ---- vanish
+vanish-on: "&bYou are now vanished."
+vanish-off: "&aYou are now visible."
+vanish-join: "&7You joined &bvanished&7. Use &e/vanish &7to become visible."
+vanish-kill-message: "&7{victim} was slain"
+vanish-fake-leave: "&e{player} left the game"
+vanish-fake-join: "&e{player} joined the game"
+
+# ---- action bar (HUD). {origin} {mana} {max} {tier} {power} {combat} {vanished}
+hud:
+  format: "{origin} &8| &bMana &f{mana}/{max} &8| &6Power {tier}{power}{vanished}{combat}{grace}"
+  choose: "&6Choose your origin! &7(/origin choose)"
+  no-origin: "&7No origin &8- &7gain mana (kill a player / Mana Crystal)"
+  power-ready: " &8| &a{power} &aREADY"
+  power-cooldown: " &8| &a{power} &c{seconds}s"
+  combat: " &8| &c&lCOMBAT {seconds}s"
+  vanished: " &8| &b&lVANISHED"
+  grace: " &8| &a&lGRACE {time}"
+
+# ---- global find/replace over ALL plugin text (optional)
+replacements: {}

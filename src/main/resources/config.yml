@@ -1,0 +1,241 @@
+# ---------------- Wincors SMP ----------------
+mana:
+  start: 1                    # mana a new player begins with (mana 0 and 1 both = power tier 1)
+  per-kill: 1                 # mana gained for killing a player
+  loss-on-death: 1            # mana lost on death. Dying with 0 mana = you LOSE your power/origin
+  kill-cooldown-seconds: 600  # same killer+victim pair only grants mana once per this many seconds (anti-farm)
+  crystal-gain: 1             # mana gained per Mana Crystal
+
+origins:
+  selection-mode: choose          # choose = players pick their origin | random = assigned randomly
+  allow-change: false             # true = players can switch origin later (/origin choose or the menu)
+  max-players-per-origin: 0       # 0 = unlimited. e.g. 5 = at most 5 players can share an origin
+
+# Mana Crystal crafting recipe (3x3 grid, one letter per slot, space = empty).
+# Use /wincors reload after editing. Letters must be single characters.
+recipe:
+  shape:
+    - "ABA"
+    - "BCB"
+    - "ABA"
+  ingredients:
+    A: DIAMOND_BLOCK
+    B: ECHO_SHARD
+    C: NETHERITE_INGOT
+
+movement:
+  direction-mode: look          # look = free aim: dashes/launches/teleports go EXACTLY where your crosshair points
+                                #        (any angle, 360 degrees, up and down included)
+                                # keys = W/S go along your aim, A/D strafe around it, Space = straight up
+                                #        (no keys held = where you look)
+  dash-lift: false              # true = dashes get a small extra upward push (bends your aim a little)
+  launch-no-keys-up: false      # keys mode only: Sky/Rock Launch go straight up when no key is held
+  dash-strength-multiplier: 1.0 # scales every dash and launch (1.5 = 50% stronger)
+  blink-distance-multiplier: 1.0 # scales every teleport (Shadow Step, Blink, Reality Warp)
+  fall-protection: true         # launch powers / Storm Wings give temporary fall-damage immunity
+
+powers:
+  cooldown-multiplier: 1.0      # scales ALL active power cooldowns (0.5 = half, 2 = double)
+
+grace:
+  default-duration: 60m        # used by /wincors grace start when no time is given (30s, 15m, 2h, 1d, 1h30m)
+
+visuals:
+  enabled: true                 # animated particle effects for every power
+  density: 1.0                  # particle amount: 0.5 = lighter (weak PCs), 2.0 = denser
+  colored-dust: true            # smooth coloured gradients (false = plain vanilla particles)
+  magic-circles: true           # rotating ground circles under blasts, buffs and strikes
+
+gui:
+  menu-item: true             # give everyone the "Origin Core" item (right-click / drop key opens the menu)
+
+combat:
+  enabled: true               # /wincors combat toggle flips this
+  duration-seconds: 20
+  kill-on-logout: true
+  blocked-items: []                                   # items that cannot be used while combat tagged (e.g. [CHORUS_FRUIT])
+  blocked-commands: [spawn, home, homes, tpa, tpahere, tpaccept, warp, back, rtp, tp]
+  pvp-radius: 10              # crystals/anchors are blocked if another player is within this many blocks
+  cancel-block-explosion-damage: true   # cancels anchor/bed explosion damage in a PvP situation
+
+ender-pearl:
+  cooldown-seconds: 300       # 300 = 5 minutes between throws (0 = no cooldown)
+  block-in-pvp: true          # pearls can't be THROWN while combat tagged
+  cancel-landing-in-pvp: false # false = a pearl thrown BEFORE the fight still teleports you if you get tagged mid-flight
+
+restrictions:
+  ban-netherite-armor: true   # master switch for the armor ban (netherite tools/weapons stay allowed)
+  banned-armor: [NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS]  # add any item here
+  one-mace: true              # only one Mace may ever exist
+  remove-mace-from-loot: true # strip maces out of generated loot (chests, vaults)
+
+dragon-egg:
+  target-max-health: 40.0     # 40 health = 20 hearts
+  cooldown-multiplier: 0.7    # 0.7 = cooldowns are 30% shorter while carrying the egg
+
+end:
+  default-open: false         # only used the very first time (state is saved in data.yml)
+  evacuate-on-close: true     # teleport players out of the End when it's closed
+
+vanish:
+  hide-invisible-in-death-messages: true  # anyone with the invisibility POTION effect (any source) is also hidden from death messages
+  potion-invisibility: true     # vanish also gives the invisibility potion effect (no particles) - so even admins who can see you see an invisible player
+  fake-messages: true       # show fake "left/joined the game" messages when an admin vanishes/unvanishes
+
+# Numbers for the FLAG powers in powers.yml
+flags:
+  lifesteal-percent: 15            # LIFESTEAL: % of damage dealt returned as health
+  bonus-damage-percent: 10         # BONUS_DAMAGE: extra % damage dealt
+  reflect-percent: 20              # REFLECT: % of melee damage sent back
+  dodge-chance-percent: 12         # DODGE: chance to ignore an attack
+  last-stand-health: 8.0           # LAST_STAND: active below this health (8 = 4 hearts)
+  last-stand-damage-multiplier: 0.6 # LAST_STAND: damage taken multiplier (0.6 = 40% less)
+  fire-touch-ticks: 80             # FIRE_TOUCH: burn time on hit (20 ticks = 1s)
+  frost-touch-freeze-ticks: 60     # FROST_TOUCH: freeze time on hit
+  frost-touch-slowness-ticks: 40   # FROST_TOUCH: slowness time on hit
+
+# Which keys/actions do what (players rebind the keys in Minecraft's controls menu)
+controls:
+  swap-key-casts: true             # the "swap hands" key uses your selected power
+  sneak-swap-cycles: true          # sneak + swap hands cycles to the next active power
+  menu-on-right-click: true        # right-clicking the Origin Core opens the menu
+  menu-on-drop: true               # the drop key while holding the Origin Core opens the menu
+
+# Custom item text (use & color codes)
+items:
+  mana-crystal:
+    name: "&d&lMana Crystal"
+    lore:
+      - "&7Right-click to gain &b1 mana&7."
+      - "&7Levels up your origin power."
+  origin-core:
+    name: "&6&lOrigin Core"
+    lore:
+      - "&7Right-click: &fopen menu"
+      - "&7Drop key: &fopen menu"
+      - "&7Swap-hands key: &fuse selected power"
+      - "&7Sneak + swap-hands: &fcycle power"
+      - "&7Movement powers: see &fmovement &7in config.yml"
+      - ""
+      - "&8Tip: rebind these keys in Options > Controls"
+  mace-lore: "&6The one and only Mace of Wincors SMP."
+  weapon-lore:                     # {origin} {owner} {weapon}
+    - "&7Legendary weapon of the {origin}&7 origin."
+    - "&7Bound to: &f{owner}"
+    - "&cOnly awakens at &lMAX MANA &cwith your origin."
+    - "&6Special effect on hit &8(short cooldown)"
+
+# The action bar shown above your hotbar (format/text is in messages.yml -> hud)
+hud:
+  enabled: true
+
+# =====================================================================
+#  ANTI-CHEAT  (behaviour checks + ore-mining monitor)
+#  Alerts go to players with wincors.alerts (ops by default); toggle yours with /wincors ac alerts.
+#  Everything is logged to plugins/WincorsSMP/anticheat.log.
+#  NOTE: players with wincors.bypass (ops!) are skipped while bypass-permission is true -
+#  set it to false (or use a non-op test account) to try the checks on yourself.
+# =====================================================================
+anticheat:
+  enabled: true
+  bypass-permission: true
+  paper-antixray-hint: true       # tell staff on join if Paper's built-in anti-xray is off
+  alert-cooldown-seconds: 3
+  decay-per-20s: 1.0              # violation levels (VL) shrink by this much every 20 seconds
+  punish:
+    setback: true                 # teleport back to the last safe spot on fly/speed flags
+    kick-vl: 0                    # kick when a player's TOTAL VL reaches this (0 = never)
+    command: ""                   # console command run at command-vl, e.g. "ban {player} Cheating ({check})"
+    command-vl: 0                 # 0 = never
+  checks:
+    fly:
+      enabled: true
+      alert-vl: 4
+      setback-vl: 4
+    speed:
+      enabled: true
+      alert-vl: 3
+      setback-vl: 4
+      max-bps: 9.5                # blocks/second on foot (sprint-jumping is ~7); scaled by speed effects / walk speed
+    reach:
+      enabled: true
+      alert-vl: 3
+      limit: 3.9                  # vanilla is 3.0; the extra covers lag. Spears get +2 automatically
+      cancel-hit: true
+    cps:
+      enabled: true
+      alert-vl: 3
+      max-cps: 24                 # clicks per second
+    nuker:
+      enabled: true
+      alert-vl: 3
+      max-breaks-per-second: 12
+    blockreach:
+      enabled: true
+      alert-vl: 3
+      limit: 6.5
+    xray:
+      enabled: true
+      alert-vl: 2
+  xray:
+    rare-ores: [DIAMOND_ORE, DEEPSLATE_DIAMOND_ORE, ANCIENT_DEBRIS, EMERALD_ORE, DEEPSLATE_EMERALD_ORE]
+    window-minutes: 15            # mining stats are kept for this long
+    min-blocks: 120               # ratio check needs at least this much stone mined...
+    min-hits: 5                   # ...and at least this many hidden rare ores...
+    ratio-limit: 0.05             # ...making up this share (0.05 = 5%) of the stone mined
+    burst-hits: 4                 # OR this many hidden rare ores within burst-minutes
+    burst-minutes: 4
+    notify-all: false             # true = tell staff about EVERY rare ore someone mines
+
+# =====================================================================
+#  TEXTURE PACK  (custom weapon / Mana Crystal / Origin Core textures, built into the plugin)
+#  The plugin builds plugins/WincorsSMP/WincorsSMP-pack.zip itself and can serve it with a tiny built-in web server.
+#  Players without the pack just see the normal vanilla items.
+#  TO USE IT: open TCP port 8165 on your server and set self-host.public-host to your server's public IP/domain
+#  (or host the zip somewhere yourself and put the link in "url").
+# =====================================================================
+resourcepack:
+  enabled: true
+  custom-models: true             # tag items with the custom model (turn off to keep vanilla items)
+  send-on-join: true
+  required: false                 # true = players who decline the pack are kicked
+  prompt: "&6Wincors SMP &7textures (weapons, Mana Crystal, Origin Core)"
+  url: ""                         # your own download link (overrides the built-in web server)
+  self-host:
+    enabled: true
+    port: 8165
+    public-host: ""               # e.g. "play.yourserver.net" or your public IP
+
+# =====================================================================
+#  XAERO'S MINIMAP / WORLD MAP CONTROL
+#  Uses Xaero's own official server-control method (hidden system messages sent on join / world change / respawn).
+#  Only the official Xaero mods obey it; modified clients can ignore it. Waypoints are not touched by these codes.
+#  NOTE: Xaero has NO code that removes the World Map screen itself - the strongest official options are below:
+# =====================================================================
+xaero:
+  enabled: true
+  disable-minimap: true          # the minimap is disabled completely
+  fair-play: true                # no cave mode on the minimap AND the world map, no entity radar
+  nether-cave-mode: false        # true = still allow the world map's cave mode in the Nether
+  resend-seconds: 0              # >0 = re-send the codes every N seconds (usually not needed)
+
+# =====================================================================
+#  CALAMITY  (operator-only origin: 30 world-ending abilities)
+#  Give it with /wincors calamity give <player>. Needs the permission wincors.calamity (ops by default).
+#  Hold the MACE and every move is stronger (bigger, deadlier, double block limit).
+#  Mass block destruction is spread over several ticks, capped per move, never touches protected blocks,
+#  and every move can be undone (Rewind ability, /calamity undo, /wincors calamity undo).
+# =====================================================================
+calamity:
+  enabled: true
+  max-blocks-per-cast: 2000      # blocks ONE move may destroy (the Mace doubles it)
+  hard-limit: 20000              # absolute ceiling - protects the server from lag/crashes
+  blocks-per-tick: 400           # destruction speed (lower = smoother on weak servers)
+  mace-multiplier: 1.5           # radius/length/damage multiplier while holding the Mace
+  cooldown-multiplier: 1.0       # scales every Calamity cooldown (0.5 = half)
+  respect-protection: false      # true = ask other plugins (WorldGuard, claims...) before destroying each block
+  disabled-worlds: []            # worlds where Calamity cannot be used, e.g. [world_spawn]
+  undo-history: 5                # how many moves can be rewound
+  aura-destroys-blocks: true     # Walking Calamity carves the ground around you
+  aura-radius: 3.5
+  protected-blocks: [BEDROCK, BARRIER, COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, REPEATING_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, END_PORTAL_FRAME, END_PORTAL, END_GATEWAY, NETHER_PORTAL, LIGHT, SPAWNER]

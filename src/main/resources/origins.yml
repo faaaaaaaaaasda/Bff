@@ -1,0 +1,302 @@
+# =====================================================================
+#  Wincors SMP - ORIGINS & LEGENDARY WEAPONS  (edit, then /wincors reload)
+# =====================================================================
+#  color accepts & codes or hex (&#RRGGBB). symbol + tagline are shown in the menus.
+#  The ten origin KEYS (PYRO, AQUA, ...) are fixed. Everything inside them
+#  can be changed: display name, color, description, GUI icon, and the
+#  legendary weapon given at max mana.
+#
+#  weapon.model = texture key from the built-in texture pack (emberfang, tidebreaker, ...). Weapons must
+#  use NETHERITE_SWORD or NETHERITE_AXE as their material to get a custom texture.
+#  weapon.proc = what happens when the weapon hits (needs max mana + the
+#  matching origin). Keys: cooldown-seconds, extra-damage, fire-ticks,
+#  freeze-ticks, knockback (push away), launch (throw upward), lightning,
+#  heal-attacker (health points), particle, effects ("EFFECT:seconds:amp").
+#  weapon.enchants use "ENCHANT:level" (levels above vanilla max are allowed).
+# =====================================================================
+
+PYRO:
+  display: Pyro
+  color: '&#FF5A36'
+  symbol: ☄
+  tagline: Ignite the battlefield.
+  description: Masters of flame. Burn everything in your path.
+  icon: BLAZE_POWDER
+  weapon:
+    name: Emberfang
+    model: emberfang
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - FIRE_ASPECT:2
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 3
+      fire-ticks: 160
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 0
+      particle: FLAME
+      effects: []
+AQUA:
+  display: Aqua
+  color: '&#3B82F6'
+  symbol: ☔
+  tagline: Command the tide.
+  description: Children of the tide. Control water and healing.
+  icon: HEART_OF_THE_SEA
+  weapon:
+    name: Tidebreaker
+    model: tidebreaker
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 1.4
+      launch: 0.0
+      lightning: false
+      heal-attacker: 0
+      particle: SPLASH
+      effects:
+      - SLOWNESS:4:1
+TERRA:
+  display: Terra
+  color: '&#3FA34D'
+  symbol: ⛰
+  tagline: Unmovable. Unbreakable.
+  description: Born of stone. Tanky, earthshaking power.
+  icon: GRASS_BLOCK
+  weapon:
+    name: Stonebreaker
+    model: stonebreaker
+    material: NETHERITE_AXE
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 3
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 1.0
+      lightning: false
+      heal-attacker: 0
+      particle: CRIT
+      effects:
+      - SLOWNESS:3:2
+AERO:
+  display: Aero
+  color: '&#E5E7EB'
+  symbol: ☁
+  tagline: Ride the wind.
+  description: Riders of the wind. Speed and mobility.
+  icon: FEATHER
+  weapon:
+    name: Zephyr Edge
+    model: zephyr_edge
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 1.3
+      lightning: false
+      heal-attacker: 0
+      particle: CLOUD
+      effects: []
+SHADOW:
+  display: Shadow
+  color: '&#8E7CC3'
+  symbol: ☾
+  tagline: Strike from the dark.
+  description: Stalkers of the dark. Stealth and life-drain.
+  icon: ENDER_EYE
+  weapon:
+    name: Nightfall
+    model: nightfall
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 2
+      particle: SMOKE
+      effects:
+      - BLINDNESS:3:0
+      - WITHER:4:1
+STORM:
+  display: Storm
+  color: '&#FACC15'
+  symbol: ⚡
+  tagline: Call down thunder.
+  description: Wielders of lightning. Ranged burst damage.
+  icon: LIGHTNING_ROD
+  weapon:
+    name: Thunderfury
+    model: thunderfury
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 5
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: true
+      heal-attacker: 0
+      particle: ELECTRIC_SPARK
+      effects: []
+FROST:
+  display: Frost
+  color: '&#7DD3FC'
+  symbol: ❄
+  tagline: Freeze the world.
+  description: Heralds of winter. Freeze and control enemies.
+  icon: BLUE_ICE
+  weapon:
+    name: Glacier's Kiss
+    model: glaciers_kiss
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 0
+      fire-ticks: 0
+      freeze-ticks: 220
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 0
+      particle: SNOWFLAKE
+      effects:
+      - SLOWNESS:3:2
+VITALIS:
+  display: Vitalis
+  color: '&#4ADE80'
+  symbol: ✿
+  tagline: Nature's champion.
+  description: Voice of nature. Regeneration and poison.
+  icon: OAK_SAPLING
+  weapon:
+    name: Verdant Fang
+    model: verdant_fang
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 3
+      particle: HAPPY_VILLAGER
+      effects:
+      - POISON:5:1
+BERSERKER:
+  display: Berserker
+  color: '&#EF4444'
+  symbol: ⚔
+  tagline: Rage without limits.
+  description: Pure rage. Brawlers who grow stronger in battle.
+  icon: IRON_AXE
+  weapon:
+    name: Bloodreaver
+    model: bloodreaver
+    material: NETHERITE_AXE
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 4
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 2
+      particle: ANGRY_VILLAGER
+      effects:
+      - WITHER:3:0
+ARCANE:
+  display: Arcane
+  color: '&#C084FC'
+  symbol: ✦
+  tagline: Bend reality.
+  description: Bending space and time itself.
+  icon: AMETHYST_SHARD
+  weapon:
+    name: Voidpiercer
+    model: voidpiercer
+    material: NETHERITE_SWORD
+    unbreakable: true
+    enchants:
+    - SHARPNESS:5
+    - SWEEPING_EDGE:3
+    - UNBREAKING:3
+    proc:
+      cooldown-seconds: 6
+      extra-damage: 3
+      fire-ticks: 0
+      freeze-ticks: 0
+      knockback: 0.0
+      launch: 0.0
+      lightning: false
+      heal-attacker: 0
+      particle: WITCH
+      effects:
+      - LEVITATION:2:0
+      - WEAKNESS:5:0
+CALAMITY:
+  display: Calamity
+  color: '&#FF2A2A'
+  symbol: ☠
+  tagline: The world ends where you walk.
+  description: 'Operator-only world-ending power: 30 abilities that destroy, kill and reshape the world.'
+  icon: DRAGON_HEAD

@@ -1,0 +1,1255 @@
+# =====================================================================
+#  Wincors SMP - POWERS  (edit freely, then /wincors reload)
+# =====================================================================
+#  Each origin has up to 10 powers. The number is the POWER TIER that
+#  unlocks it (tier = your mana, 1-10).
+#
+#  icon: optional item shown in the power menu (any item name, e.g. BLAZE_POWDER)
+#  type: POTION   -> always-on potion effect       (effect, amplifier)
+#  type: FLAG     -> special passive               (flag)
+#       flags: NO_FALL, LIFESTEAL, FIRE_TOUCH, FROST_TOUCH, BONUS_DAMAGE,
+#              REFLECT, LAST_STAND, DODGE, FREEZE_IMMUNE
+#       (their numbers are in config.yml under "flags:")
+#  type: ACTIVE   -> power you trigger             (cooldown seconds + actions)
+#
+#  An ACTIVE power runs its "actions" list in order. Action types and keys:
+#   NOVA         radius, damage, knockback, fire-ticks, freeze-ticks, particle, sound, effects
+#   BUFF         particle, sound, effects                       (applies to you)
+#   DASH         speed, up, particle, sound, effects            (movement)
+#   LAUNCH       strength, particle, sound, effects             (movement)
+#   BLINK        distance, particle, effects                    (teleport)
+#   STRIKE       range, radius, damage, lightning, fire-ticks, particle, sound, style (beam|meteor), effects
+#                (lightning: true draws a real jagged bolt)
+#   HEAL         amount, effects
+#   PULL         radius, strength, particle, effects
+#   FIREBALLS    count
+#   FREEZE_ALL   radius, seconds
+#   LIGHTNING_FX radius
+#   WINGS        particle, seconds                              (glowing wings on your back)
+#   HALO         particle, seconds                              (spinning halo above your head)
+#   NO_FALL      seconds                                        (fall-damage immunity)
+#
+#  effects use the format  "EFFECT:seconds:amplifier"  e.g. "SLOWNESS:4:1"
+#  (amplifier 0 = level I). Effect, particle and sound names are the vanilla
+#  names in CAPS (SLOWNESS, FLAME, ENTITY_BLAZE_SHOOT ...). Invalid entries are
+#  skipped and reported in the console.
+# =====================================================================
+
+PYRO:
+  1:
+    name: Ember Skin
+    description: Permanent fire resistance.
+    icon: MAGMA_CREAM
+    type: POTION
+    effect: FIRE_RESISTANCE
+    amplifier: 0
+  2:
+    name: Scorching Touch
+    description: Your hits ignite enemies.
+    icon: FLINT_AND_STEEL
+    type: FLAG
+    flag: FIRE_TOUCH
+  3:
+    name: Fire Volley
+    description: Shoot a volley of fireballs.
+    icon: FIRE_CHARGE
+    type: ACTIVE
+    cooldown: 15
+    actions:
+    - type: FIREBALLS
+      count: 3
+  4:
+    name: Forge Heart
+    description: Haste I.
+    icon: BLAST_FURNACE
+    type: POTION
+    effect: HASTE
+    amplifier: 0
+  5:
+    name: Flame Nova
+    description: Burst of flame igniting nearby foes.
+    icon: BLAZE_POWDER
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 6
+      damage: 5
+      knockback: 1.2
+      fire-ticks: 100
+      freeze-ticks: 0
+      particle: FLAME
+      sound: ENTITY_BLAZE_SHOOT
+      effects: []
+  6:
+    name: Inferno Might
+    description: Strength I.
+    icon: BLAZE_ROD
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  7:
+    name: Phoenix Dash
+    description: Dash in your aim direction, wreathed in fire.
+    icon: FIREWORK_ROCKET
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: DASH
+      speed: 1.8
+      up: 0.3
+      sound: ENTITY_BLAZE_SHOOT
+      effects:
+      - FIRE_RESISTANCE:5:0
+      particle: FLAME
+  8:
+    name: Burning Rage
+    description: Take less damage when below 4 hearts.
+    icon: TOTEM_OF_UNDYING
+    type: FLAG
+    flag: LAST_STAND
+  9:
+    name: Meteor Strike
+    description: Call a meteor down on your target.
+    icon: MAGMA_BLOCK
+    type: ACTIVE
+    cooldown: 45
+    actions:
+    - type: STRIKE
+      range: 40
+      radius: 5
+      damage: 10
+      lightning: false
+      fire-ticks: 120
+      particle: EXPLOSION
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+      style: meteor
+  10:
+    name: Avatar of Flame
+    description: 'Become flame itself: buffs + fire nova.'
+    icon: LAVA_BUCKET
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: BUFF
+      particle: FLAME
+      sound: ENTITY_WITHER_SPAWN
+      effects:
+      - STRENGTH:15:1
+      - SPEED:15:1
+      - RESISTANCE:15:0
+    - type: NOVA
+      radius: 8
+      damage: 6
+      knockback: 1.5
+      fire-ticks: 120
+      freeze-ticks: 0
+      particle: FLAME
+      sound: ENTITY_BLAZE_SHOOT
+      effects: []
+    - type: WINGS
+      particle: FLAME
+      seconds: 6
+AQUA:
+  1:
+    name: Gills
+    description: Water breathing.
+    icon: PUFFERFISH
+    type: POTION
+    effect: WATER_BREATHING
+    amplifier: 0
+  2:
+    name: Swift Swimmer
+    description: Dolphin's grace.
+    icon: NAUTILUS_SHELL
+    type: POTION
+    effect: DOLPHINS_GRACE
+    amplifier: 0
+  3:
+    name: Water Jet
+    description: Dash in your aim direction like a jet of water.
+    icon: HEART_OF_THE_SEA
+    type: ACTIVE
+    cooldown: 12
+    actions:
+    - type: DASH
+      speed: 1.6
+      up: 0.2
+      sound: ENTITY_PLAYER_SPLASH
+      effects: []
+      particle: SPLASH
+  4:
+    name: Tidal Skin
+    description: +2 hearts.
+    icon: PRISMARINE_SHARD
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  5:
+    name: Tidal Wave
+    description: Push and slow nearby enemies.
+    icon: WATER_BUCKET
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 6
+      damage: 3
+      knockback: 2.0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: SPLASH
+      sound: ENTITY_PLAYER_SPLASH
+      effects:
+      - SLOWNESS:4:1
+  6:
+    name: Riptide Fury
+    description: +10% damage dealt.
+    icon: TRIDENT
+    type: FLAG
+    flag: BONUS_DAMAGE
+  7:
+    name: Healing Waters
+    description: Restore 4 hearts and regenerate.
+    icon: SPLASH_POTION
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: HEAL
+      amount: 8
+      effects:
+      - REGENERATION:5:1
+  8:
+    name: Drowning Grasp
+    description: Slow and sicken your target.
+    icon: INK_SAC
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: STRIKE
+      range: 25
+      radius: 4
+      damage: 4
+      lightning: false
+      fire-ticks: 0
+      particle: SPLASH
+      sound: ENTITY_PLAYER_SPLASH
+      effects:
+      - SLOWNESS:4:3
+      - NAUSEA:5:0
+  9:
+    name: Maelstrom
+    description: Drag enemies toward you.
+    icon: CONDUIT
+    type: ACTIVE
+    cooldown: 40
+    actions:
+    - type: PULL
+      radius: 10
+      strength: 1.5
+      particle: SPLASH
+      effects:
+      - SLOWNESS:3:1
+  10:
+    name: Poseidon's Wrath
+    description: Resistance, strength and a crushing wave.
+    icon: SEA_LANTERN
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: BUFF
+      particle: SPLASH
+      sound: ENTITY_PLAYER_SPLASH
+      effects:
+      - RESISTANCE:15:1
+      - STRENGTH:15:1
+      - DOLPHINS_GRACE:15:0
+    - type: NOVA
+      radius: 8
+      damage: 6
+      knockback: 2.0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: SPLASH
+      sound: ENTITY_PLAYER_SPLASH
+      effects: []
+    - type: WINGS
+      particle: SPLASH
+      seconds: 6
+TERRA:
+  1:
+    name: Stone Skin
+    description: +2 hearts.
+    icon: COBBLESTONE
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  2:
+    name: Miner's Gift
+    description: Haste I.
+    icon: GOLDEN_PICKAXE
+    type: POTION
+    effect: HASTE
+    amplifier: 0
+  3:
+    name: Stone Armor
+    description: Resistance III for 8 seconds.
+    icon: IRON_CHESTPLATE
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: BUFF
+      particle: CRIT
+      sound: BLOCK_ANVIL_LAND
+      effects:
+      - RESISTANCE:8:2
+  4:
+    name: Rooted
+    description: No fall damage.
+    icon: ANVIL
+    type: FLAG
+    flag: NO_FALL
+  5:
+    name: Earthquake
+    description: Shake the ground, damaging and shoving foes.
+    icon: COARSE_DIRT
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 6
+      damage: 5
+      knockback: 1.5
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: CRIT
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+  6:
+    name: Mountain Strength
+    description: Strength I.
+    icon: STONE_AXE
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  7:
+    name: Rock Launch
+    description: Launch yourself in your aim direction. No fall damage.
+    icon: PISTON
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: LAUNCH
+      strength: 1.5
+      sound: BLOCK_ANVIL_LAND
+      effects: []
+      particle: CRIT
+    - type: NO_FALL
+      seconds: 6
+  8:
+    name: Unbreakable
+    description: Reflect 20% of melee damage.
+    icon: SHIELD
+    type: FLAG
+    flag: REFLECT
+  9:
+    name: Rockfall
+    description: Drop rocks on your target.
+    icon: DRIPSTONE_BLOCK
+    type: ACTIVE
+    cooldown: 35
+    actions:
+    - type: STRIKE
+      range: 30
+      radius: 4
+      damage: 8
+      lightning: false
+      fire-ticks: 0
+      particle: CRIT
+      sound: ENTITY_GENERIC_EXPLODE
+      effects:
+      - SLOWNESS:3:2
+  10:
+    name: Titan Form
+    description: Massive defense and strength + quake.
+    icon: RAW_IRON_BLOCK
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: BUFF
+      particle: CRIT
+      sound: ENTITY_RAVAGER_ROAR
+      effects:
+      - RESISTANCE:15:2
+      - STRENGTH:15:1
+      - ABSORPTION:15:3
+    - type: NOVA
+      radius: 6
+      damage: 4
+      knockback: 2.0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: CRIT
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+    - type: WINGS
+      particle: CRIT
+      seconds: 6
+AERO:
+  1:
+    name: Featherfall
+    description: No fall damage.
+    icon: FEATHER
+    type: FLAG
+    flag: NO_FALL
+  2:
+    name: Swift
+    description: Speed I.
+    icon: SUGAR
+    type: POTION
+    effect: SPEED
+    amplifier: 0
+  3:
+    name: Gust Dash
+    description: A fast burst of wind in your aim direction.
+    icon: PHANTOM_MEMBRANE
+    type: ACTIVE
+    cooldown: 10
+    actions:
+    - type: DASH
+      speed: 2.0
+      up: 0.2
+      sound: ENTITY_PHANTOM_FLAP
+      effects: []
+      particle: CLOUD
+  4:
+    name: Light Step
+    description: Jump Boost II.
+    icon: RABBIT_FOOT
+    type: POTION
+    effect: JUMP_BOOST
+    amplifier: 1
+  5:
+    name: Wind Burst
+    description: Blast enemies away.
+    icon: WIND_CHARGE
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: NOVA
+      radius: 6
+      damage: 2
+      knockback: 2.5
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: CLOUD
+      sound: ENTITY_PHANTOM_FLAP
+      effects: []
+  6:
+    name: Updraft
+    description: Speed II.
+    icon: LEATHER_BOOTS
+    type: POTION
+    effect: SPEED
+    amplifier: 1
+  7:
+    name: Sky Launch
+    description: Rocket in your aim direction. No fall damage.
+    icon: FIREWORK_ROCKET
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: LAUNCH
+      strength: 1.8
+      sound: ENTITY_PHANTOM_FLAP
+      effects: []
+      particle: CLOUD
+    - type: NO_FALL
+      seconds: 8
+  8:
+    name: Wind Veil
+    description: 12% chance to dodge attacks.
+    icon: WHITE_BANNER
+    type: FLAG
+    flag: DODGE
+  9:
+    name: Cyclone
+    description: Violent winds toss enemies around.
+    icon: BREEZE_ROD
+    type: ACTIVE
+    cooldown: 35
+    actions:
+    - type: NOVA
+      radius: 8
+      damage: 4
+      knockback: 3.5
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: CLOUD
+      sound: ENTITY_PHANTOM_FLAP
+      effects:
+      - LEVITATION:2:0
+  10:
+    name: Storm Wings
+    description: Super speed and agility.
+    icon: ELYTRA
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: BUFF
+      particle: CLOUD
+      sound: ENTITY_ENDER_DRAGON_GROWL
+      effects:
+      - SPEED:15:2
+      - JUMP_BOOST:15:2
+    - type: NO_FALL
+      seconds: 15
+    - type: DASH
+      speed: 1.5
+      up: 0.3
+      sound: ENTITY_PHANTOM_FLAP
+      effects: []
+      particle: CLOUD
+    - type: WINGS
+      particle: CLOUD
+      seconds: 6
+SHADOW:
+  1:
+    name: Night Eyes
+    description: Permanent night vision.
+    icon: ENDER_EYE
+    type: POTION
+    effect: NIGHT_VISION
+    amplifier: 0
+  2:
+    name: Umbral Edge
+    description: +10% damage dealt.
+    icon: NETHERITE_SWORD
+    type: FLAG
+    flag: BONUS_DAMAGE
+  3:
+    name: Shadow Step
+    description: Teleport in your aim direction and turn invisible.
+    icon: ENDER_PEARL
+    type: ACTIVE
+    cooldown: 15
+    actions:
+    - type: BLINK
+      distance: 8
+      effects:
+      - INVISIBILITY:4:0
+      particle: SMOKE
+  4:
+    name: Dark Vigor
+    description: +2 hearts.
+    icon: OBSIDIAN
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  5:
+    name: Blinding Dark
+    description: Blind everything nearby.
+    icon: BLACK_DYE
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 7
+      damage: 1
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: SMOKE
+      sound: ENTITY_WITHER_SPAWN
+      effects:
+      - BLINDNESS:5:0
+      - DARKNESS:6:0
+  6:
+    name: Soul Siphon
+    description: Heal 15% of damage dealt.
+    icon: FERMENTED_SPIDER_EYE
+    type: FLAG
+    flag: LIFESTEAL
+  7:
+    name: Vanish
+    description: Invisible and fast for 8 seconds.
+    icon: DRAGON_BREATH
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: BUFF
+      particle: SMOKE
+      sound: ENTITY_ENDERMAN_TELEPORT
+      effects:
+      - INVISIBILITY:8:0
+      - SPEED:8:1
+  8:
+    name: Dusk Skin
+    description: Take less damage when below 4 hearts.
+    icon: TOTEM_OF_UNDYING
+    type: FLAG
+    flag: LAST_STAND
+  9:
+    name: Umbral Chains
+    description: Bind and wither your target.
+    icon: LEAD
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: STRIKE
+      range: 25
+      radius: 3
+      damage: 6
+      lightning: false
+      fire-ticks: 0
+      particle: SOUL_FIRE_FLAME
+      sound: ENTITY_WITHER_SPAWN
+      effects:
+      - SLOWNESS:4:3
+      - WEAKNESS:5:1
+      - WITHER:4:0
+  10:
+    name: Eclipse
+    description: Plunge the area into darkness.
+    icon: WITHER_SKELETON_SKULL
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: NOVA
+      radius: 10
+      damage: 6
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: SMOKE
+      sound: ENTITY_WITHER_SPAWN
+      effects:
+      - BLINDNESS:8:0
+      - WITHER:5:1
+    - type: BUFF
+      particle: SMOKE
+      sound: ENTITY_WITHER_SPAWN
+      effects:
+      - STRENGTH:10:1
+      - SPEED:10:1
+    - type: WINGS
+      particle: SMOKE
+      seconds: 6
+STORM:
+  1:
+    name: Static Charge
+    description: Speed I.
+    icon: GLOWSTONE_DUST
+    type: POTION
+    effect: SPEED
+    amplifier: 0
+  2:
+    name: Conductive
+    description: +10% damage dealt.
+    icon: COPPER_INGOT
+    type: FLAG
+    flag: BONUS_DAMAGE
+  3:
+    name: Lightning Bolt
+    description: Strike your target with lightning.
+    icon: LIGHTNING_ROD
+    type: ACTIVE
+    cooldown: 15
+    actions:
+    - type: STRIKE
+      range: 30
+      radius: 3
+      damage: 7
+      lightning: true
+      fire-ticks: 0
+      particle: ELECTRIC_SPARK
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects: []
+  4:
+    name: Surge
+    description: +2 hearts.
+    icon: HONEY_BOTTLE
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  5:
+    name: Chain Lightning
+    description: Shock everything nearby.
+    icon: REDSTONE
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 8
+      damage: 4
+      knockback: 0.5
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: ELECTRIC_SPARK
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects: []
+  6:
+    name: Thunder Rush
+    description: Dash in your aim direction at lightning speed.
+    icon: GOLDEN_BOOTS
+    type: ACTIVE
+    cooldown: 15
+    actions:
+    - type: DASH
+      speed: 2.2
+      up: 0.15
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects:
+      - SPEED:4:1
+      particle: ELECTRIC_SPARK
+  7:
+    name: Overcharge
+    description: Strength I.
+    icon: GOLD_INGOT
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  8:
+    name: Static Field
+    description: Reflect 20% of melee damage.
+    icon: CACTUS
+    type: FLAG
+    flag: REFLECT
+  9:
+    name: Thunderstorm
+    description: Devastating lightning at your target.
+    icon: NETHER_STAR
+    type: ACTIVE
+    cooldown: 40
+    actions:
+    - type: STRIKE
+      range: 35
+      radius: 6
+      damage: 9
+      lightning: true
+      fire-ticks: 0
+      particle: ELECTRIC_SPARK
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects: []
+  10:
+    name: Zeus's Judgment
+    description: Judgment from the sky on everything near you.
+    icon: BEACON
+    type: ACTIVE
+    cooldown: 100
+    actions:
+    - type: NOVA
+      radius: 12
+      damage: 10
+      knockback: 0.8
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: ELECTRIC_SPARK
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects: []
+    - type: LIGHTNING_FX
+      radius: 12
+    - type: BUFF
+      particle: ELECTRIC_SPARK
+      sound: ENTITY_LIGHTNING_BOLT_THUNDER
+      effects:
+      - SPEED:12:1
+      - STRENGTH:12:1
+    - type: WINGS
+      particle: ELECTRIC_SPARK
+      seconds: 6
+    - type: HALO
+      particle: ELECTRIC_SPARK
+      seconds: 8
+FROST:
+  1:
+    name: Frost Skin
+    description: Immune to powder snow freezing.
+    icon: POWDER_SNOW_BUCKET
+    type: FLAG
+    flag: FREEZE_IMMUNE
+  2:
+    name: Chilling Touch
+    description: Your hits chill enemies.
+    icon: SNOWBALL
+    type: FLAG
+    flag: FROST_TOUCH
+  3:
+    name: Frost Nova
+    description: Freeze and slow nearby enemies.
+    icon: BLUE_ICE
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: NOVA
+      radius: 6
+      damage: 3
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 200
+      particle: SNOWFLAKE
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - SLOWNESS:5:2
+  4:
+    name: Glacial Vigor
+    description: +2 hearts.
+    icon: PACKED_ICE
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  5:
+    name: Ice Dash
+    description: Slide in your aim direction on a sheet of ice.
+    icon: ICE
+    type: ACTIVE
+    cooldown: 12
+    actions:
+    - type: DASH
+      speed: 1.6
+      up: 0.1
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - SPEED:3:1
+      particle: SNOWFLAKE
+  6:
+    name: Winter Strength
+    description: Strength I.
+    icon: DIAMOND_SWORD
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  7:
+    name: Frozen Prison
+    description: Lock your target in ice.
+    icon: GLASS
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: STRIKE
+      range: 25
+      radius: 3
+      damage: 3
+      lightning: false
+      fire-ticks: 0
+      particle: SNOWFLAKE
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - SLOWNESS:3:5
+      - MINING_FATIGUE:3:2
+      - WEAKNESS:3:1
+  8:
+    name: Permafrost
+    description: Take less damage when below 4 hearts.
+    icon: TOTEM_OF_UNDYING
+    type: FLAG
+    flag: LAST_STAND
+  9:
+    name: Blizzard
+    description: A freezing storm around you.
+    icon: SNOW_BLOCK
+    type: ACTIVE
+    cooldown: 40
+    actions:
+    - type: NOVA
+      radius: 10
+      damage: 4
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 300
+      particle: SNOWFLAKE
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - SLOWNESS:8:1
+  10:
+    name: Absolute Zero
+    description: Freeze the world around you.
+    icon: DIAMOND
+    type: ACTIVE
+    cooldown: 100
+    actions:
+    - type: NOVA
+      radius: 12
+      damage: 8
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 400
+      particle: SNOWFLAKE
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - SLOWNESS:4:4
+    - type: BUFF
+      particle: SNOWFLAKE
+      sound: BLOCK_GLASS_BREAK
+      effects:
+      - RESISTANCE:12:1
+    - type: WINGS
+      particle: SNOWFLAKE
+      seconds: 6
+VITALIS:
+  1:
+    name: Nature's Blessing
+    description: +2 hearts.
+    icon: GOLDEN_APPLE
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  2:
+    name: Leafy Landing
+    description: No fall damage.
+    icon: OAK_LEAVES
+    type: FLAG
+    flag: NO_FALL
+  3:
+    name: Healing Pulse
+    description: Heal 4 hearts and regenerate.
+    icon: GHAST_TEAR
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: HEAL
+      amount: 8
+      effects:
+      - REGENERATION:6:1
+  4:
+    name: Thorn Skin
+    description: Reflect 20% of melee damage.
+    icon: SWEET_BERRIES
+    type: FLAG
+    flag: REFLECT
+  5:
+    name: Vine Snare
+    description: Entangle nearby enemies.
+    icon: VINE
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 7
+      damage: 2
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: HAPPY_VILLAGER
+      sound: ENTITY_EVOKER_CAST_SPELL
+      effects:
+      - SLOWNESS:4:4
+      - WEAKNESS:4:0
+  6:
+    name: Verdant Strength
+    description: Strength I.
+    icon: WOODEN_AXE
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  7:
+    name: Toxic Bloom
+    description: Poison cloud around you.
+    icon: SPIDER_EYE
+    type: ACTIVE
+    cooldown: 25
+    actions:
+    - type: NOVA
+      radius: 7
+      damage: 2
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: HAPPY_VILLAGER
+      sound: ENTITY_EVOKER_CAST_SPELL
+      effects:
+      - POISON:6:1
+  8:
+    name: Nature's Vigor
+    description: Regeneration I.
+    icon: GLISTERING_MELON_SLICE
+    type: POTION
+    effect: REGENERATION
+    amplifier: 0
+  9:
+    name: Overgrowth
+    description: Heal, gain absorption, and snare foes.
+    icon: MOSS_BLOCK
+    type: ACTIVE
+    cooldown: 40
+    actions:
+    - type: HEAL
+      amount: 10
+      effects:
+      - ABSORPTION:10:2
+    - type: NOVA
+      radius: 6
+      damage: 0
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: HAPPY_VILLAGER
+      sound: ENTITY_EVOKER_CAST_SPELL
+      effects:
+      - SLOWNESS:4:3
+  10:
+    name: World Tree
+    description: Become one with nature.
+    icon: AZALEA
+    type: ACTIVE
+    cooldown: 100
+    actions:
+    - type: HEAL
+      amount: 20
+      effects: []
+    - type: BUFF
+      particle: HAPPY_VILLAGER
+      sound: ENTITY_PLAYER_LEVELUP
+      effects:
+      - REGENERATION:15:2
+      - RESISTANCE:15:1
+      - ABSORPTION:15:4
+    - type: WINGS
+      particle: HAPPY_VILLAGER
+      seconds: 6
+    - type: HALO
+      particle: HAPPY_VILLAGER
+      seconds: 8
+BERSERKER:
+  1:
+    name: Thick Skin
+    description: +2 hearts.
+    icon: LEATHER_CHESTPLATE
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  2:
+    name: Brute Force
+    description: +10% damage dealt.
+    icon: IRON_AXE
+    type: FLAG
+    flag: BONUS_DAMAGE
+  3:
+    name: Rage
+    description: Strength II and speed for 8 seconds.
+    icon: BONE
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: BUFF
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_RAVAGER_ROAR
+      effects:
+      - STRENGTH:8:1
+      - SPEED:8:0
+  4:
+    name: Iron Will
+    description: Take less damage when below 4 hearts.
+    icon: TOTEM_OF_UNDYING
+    type: FLAG
+    flag: LAST_STAND
+  5:
+    name: Ground Slam
+    description: Smash the ground, hurling enemies.
+    icon: NETHERITE_AXE
+    type: ACTIVE
+    cooldown: 20
+    actions:
+    - type: NOVA
+      radius: 5
+      damage: 6
+      knockback: 1.5
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+  6:
+    name: Bloodlust
+    description: Heal 15% of damage dealt.
+    icon: REDSTONE
+    type: FLAG
+    flag: LIFESTEAL
+  7:
+    name: Charge
+    description: Charge in your aim direction with strength and resistance.
+    icon: IRON_BOOTS
+    type: ACTIVE
+    cooldown: 18
+    actions:
+    - type: DASH
+      speed: 2.0
+      up: 0.1
+      sound: ENTITY_RAVAGER_ROAR
+      effects:
+      - STRENGTH:5:0
+      - RESISTANCE:3:1
+      particle: ANGRY_VILLAGER
+  8:
+    name: Savage Might
+    description: Strength I.
+    icon: DIAMOND_AXE
+    type: POTION
+    effect: STRENGTH
+    amplifier: 0
+  9:
+    name: War Cry
+    description: Weaken foes, empower yourself.
+    icon: GOAT_HORN
+    type: ACTIVE
+    cooldown: 40
+    actions:
+    - type: NOVA
+      radius: 10
+      damage: 2
+      knockback: 0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_RAVAGER_ROAR
+      effects:
+      - WEAKNESS:8:1
+      - SLOWNESS:4:0
+    - type: BUFF
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_RAVAGER_ROAR
+      effects:
+      - STRENGTH:10:2
+  10:
+    name: Ragnarok
+    description: Unleash unlimited rage.
+    icon: TNT
+    type: ACTIVE
+    cooldown: 100
+    actions:
+    - type: BUFF
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_ENDER_DRAGON_GROWL
+      effects:
+      - STRENGTH:12:3
+      - RESISTANCE:12:1
+      - SPEED:12:1
+      - REGENERATION:12:1
+    - type: NOVA
+      radius: 8
+      damage: 7
+      knockback: 2.0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: ANGRY_VILLAGER
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+    - type: WINGS
+      particle: ANGRY_VILLAGER
+      seconds: 6
+ARCANE:
+  1:
+    name: Fortune's Favor
+    description: Luck I.
+    icon: LAPIS_LAZULI
+    type: POTION
+    effect: LUCK
+    amplifier: 0
+  2:
+    name: Mana Flow
+    description: Haste I.
+    icon: AMETHYST_SHARD
+    type: POTION
+    effect: HASTE
+    amplifier: 0
+  3:
+    name: Blink
+    description: Teleport 10 blocks in your aim direction.
+    icon: CHORUS_FRUIT
+    type: ACTIVE
+    cooldown: 10
+    actions:
+    - type: BLINK
+      distance: 10
+      effects: []
+      particle: PORTAL
+  4:
+    name: Mystic Ward
+    description: +2 hearts.
+    icon: ENCHANTED_BOOK
+    type: POTION
+    effect: HEALTH_BOOST
+    amplifier: 0
+  5:
+    name: Arcane Burst
+    description: Fire a bolt of pure magic.
+    icon: END_CRYSTAL
+    type: ACTIVE
+    cooldown: 15
+    actions:
+    - type: STRIKE
+      range: 30
+      radius: 3
+      damage: 6
+      lightning: false
+      fire-ticks: 0
+      particle: WITCH
+      sound: ENTITY_EVOKER_CAST_SPELL
+      effects: []
+  6:
+    name: Spell Power
+    description: +10% damage dealt.
+    icon: BOOK
+    type: FLAG
+    flag: BONUS_DAMAGE
+  7:
+    name: Gravity Well
+    description: Pull enemies in and slow them.
+    icon: COMPASS
+    type: ACTIVE
+    cooldown: 30
+    actions:
+    - type: PULL
+      radius: 10
+      strength: 1.8
+      particle: WITCH
+      effects:
+      - SLOWNESS:3:1
+  8:
+    name: Dimensional Step
+    description: 12% chance to dodge attacks.
+    icon: ECHO_SHARD
+    type: FLAG
+    flag: DODGE
+  9:
+    name: Time Freeze
+    description: Freeze everything nearby for 4 seconds.
+    icon: CLOCK
+    type: ACTIVE
+    cooldown: 60
+    actions:
+    - type: FREEZE_ALL
+      radius: 10
+      seconds: 4
+  10:
+    name: Reality Warp
+    description: 'Warp space: blink and detonate.'
+    icon: END_PORTAL_FRAME
+    type: ACTIVE
+    cooldown: 90
+    actions:
+    - type: BLINK
+      distance: 15
+      effects: []
+      particle: PORTAL
+    - type: NOVA
+      radius: 8
+      damage: 6
+      knockback: 3.0
+      fire-ticks: 0
+      freeze-ticks: 0
+      particle: WITCH
+      sound: ENTITY_GENERIC_EXPLODE
+      effects: []
+    - type: BUFF
+      particle: WITCH
+      sound: ENTITY_EVOKER_CAST_SPELL
+      effects:
+      - RESISTANCE:10:1
+    - type: WINGS
+      particle: WITCH
+      seconds: 6
+    - type: HALO
+      particle: WITCH
+      seconds: 8

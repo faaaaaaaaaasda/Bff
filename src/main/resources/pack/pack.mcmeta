@@ -1,0 +1,12 @@
+{
+  "pack": {
+    "pack_format": 75,
+    "min_format": 46,
+    "max_format": 99,
+    "supported_formats": {
+      "min_inclusive": 46,
+      "max_inclusive": 99
+    },
+    "description": "\u00a76Wincors SMP \u00a77weapon textures"
+  }
+}

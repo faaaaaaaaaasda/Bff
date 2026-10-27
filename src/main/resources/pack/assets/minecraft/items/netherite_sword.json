@@ -1,0 +1,69 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "cases": [
+      {
+        "when": "emberfang",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/emberfang"
+        }
+      },
+      {
+        "when": "tidebreaker",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/tidebreaker"
+        }
+      },
+      {
+        "when": "zephyr_edge",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/zephyr_edge"
+        }
+      },
+      {
+        "when": "nightfall",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/nightfall"
+        }
+      },
+      {
+        "when": "thunderfury",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/thunderfury"
+        }
+      },
+      {
+        "when": "glaciers_kiss",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/glaciers_kiss"
+        }
+      },
+      {
+        "when": "verdant_fang",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/verdant_fang"
+        }
+      },
+      {
+        "when": "voidpiercer",
+        "model": {
+          "type": "minecraft:model",
+          "model": "wincors:item/voidpiercer"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/netherite_sword"
+    }
+  }
+}
