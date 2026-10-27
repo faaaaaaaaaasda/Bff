@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Locate pom.xml
+        id: pom
+        run: |
+          POM=$(find . -name pom.xml -not -path '*/target/*' | head -n 1)
+          if [ -z "$POM" ]; then
+            echo "No pom.xml found in the repository. Files present:"
+            find . -maxdepth 3 -not -path './.git/*'
+            exit 1
+          fi
+          echo "Found $POM"
+          echo "path=$POM" >> "$GITHUB_OUTPUT"
+
+      - name: Build with Maven
+        run: mvn -B clean package -f "${{ steps.pom.outputs.path }}"
+
+      - name: Upload plugin jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: WincorsSMP
+          path: '**/target/WincorsSMP-*.jar'
